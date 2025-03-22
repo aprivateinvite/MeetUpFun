@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha Landing Page</title>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+        }
+        .landing-container {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 800px;
+            box-shadow: 0px 0px 20px rgba(255, 0, 0, 0.6);
+        }
+        h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #ff6a00, #ee0979);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            overflow: hidden;
+            display: block;
+            white-space: normal;
+            word-wrap: break-word;
+            max-width: 100%;
+        }
+        p {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+        .typing-container {
+            display: inline-block;
+            border-right: 3px solid white;
+            white-space: pre-line;
+            overflow: hidden;
+            word-wrap: break-word;
+        }
+        .highlight {
+            color: #ffcc00;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body id="page-body">
+
+    <div class="landing-container">
+        <h1><span class="typing-container" id="title"></span></h1> <!-- Título animado -->
+        <p id="paragraph"></p> <!-- Parágrafo -->
+    </div>
+
+    <script>
+        var pageTitle = "Casual Encounters or Something More? It's Up to You! 🔥";
+        var pageParagraph = "Connect with people who are looking for the same thing as you: intense moments without commitment or even something more serious. Find compatible profiles, schedule dates and enjoy every moment. 😘";
+        var backgroundImage = "https://photos.xgroovy.com/contents/albums/sources/563000/563576/594155.jpg";
+        var affiliateLink = "https://t.slext2.com/205192/3785/0?target=domainredirects&aff_sub5=SF_006OG000004lmDN";
+        
+        document.title = pageTitle;
+        document.getElementById("paragraph").innerText = pageParagraph;
+        document.getElementById("page-body").style.backgroundImage = "url('" + backgroundImage + "')";
+        
+        function typeEffect(element, text, speed, callback) {
+            let words = text.split(" ");
+            let i = 0;
+            function typing() {
+                if (i < words.length) {
+                    let span = document.createElement("span");
+                    span.classList.add("highlight");
+                    span.innerHTML = words[i] + " ";
+                    element.appendChild(span);
+                    i++;
+                    setTimeout(typing, speed);
+                } else if (callback) {
+                    setTimeout(callback, 500); // Reduzido para 0,5 segundos de espera antes do redirecionamento
+                }
+            }
+            element.innerHTML = "";
+            typing();
+        }
+        
+        typeEffect(document.getElementById("title"), pageTitle, 150, function() {
+            setTimeout(function() {
+                window.location.href = affiliateLink; // Redirecionamento automático após 1 segundo no máximo
+            }, 1000);
+        });
+        
+    </script>
+</body>
+</html>
