@@ -20,7 +20,7 @@
             text-align: center;
         }
         .landing-container {
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.0); /* Caixa de texto transparente */
             padding: 30px;
             border-radius: 15px;
             max-width: 800px;
@@ -58,21 +58,37 @@
 <body id="page-body">
 
     <div class="landing-container">
-        <h1><span class="typing-container" id="title"></span></h1> <!-- Título animado -->
-        <p id="paragraph"></p> <!-- Parágrafo -->
+        <h1><span class="typing-container" id="title"></span></h1>
+        <p id="paragraph"></p>
     </div>
 
     <script>
         var pageTitle = "Casual Encounters or Something More? It's Up to You! 🔥";
         var pageParagraph = "Connect with people who are looking for the same thing as you: intense moments without commitment or even something more serious. Find compatible profiles, schedule dates and enjoy every moment. 😘";
-        var backgroundImage = "https://photos.xgroovy.com/contents/albums/sources/563000/563576/594155.jpg";
-        var affiliateLink = "https://t.slext2.com/205192/3785/0?target=domainredirects&aff_sub5=SF_006OG000004lmDN";
-        
+        var backgroundVideo = "https://videos.pexels.com/video-files/8760575/8760575-hd_1080_1920_30fps.mp4"; // Exemplo de vídeo
+        var usLink = "https://t.slext2.com/205192/8517/35266?aff_sub5=SF_006OG000004lmDN";
+        var globalLink = "https://t.slext2.com/205192/3785/0?bo=2753,2754,2755,2756&target=domainredirects&po=6456&aff_sub5=SF_006OG000004lmDN";
+
         document.title = pageTitle;
         document.getElementById("paragraph").innerText = pageParagraph;
-        document.getElementById("page-body").style.backgroundImage = "url('" + backgroundImage + "')";
-        
-        function typeEffect(element, text, speed, callback) {
+
+        // Adiciona o vídeo como fundo
+        var video = document.createElement("video");
+        video.src = backgroundVideo;
+        video.autoplay = true;
+        video.loop = true;
+        video.muted = true;
+        video.playsInline = true;
+        video.style.position = "fixed";
+        video.style.top = 0;
+        video.style.left = 0;
+        video.style.width = "100%";
+        video.style.height = "100%";
+        video.style.objectFit = "cover";
+        video.style.zIndex = "-1";
+        document.body.appendChild(video);
+
+        function typeEffect(element, text, speed) {
             let words = text.split(" ");
             let i = 0;
             function typing() {
@@ -83,20 +99,30 @@
                     element.appendChild(span);
                     i++;
                     setTimeout(typing, speed);
-                } else if (callback) {
-                    setTimeout(callback, 500); // Reduzido para 0,5 segundos de espera antes do redirecionamento
+                } else {
+                    setTimeout(redirectUser, 3000);
                 }
             }
             element.innerHTML = "";
             typing();
         }
-        
-        typeEffect(document.getElementById("title"), pageTitle, 150, function() {
-            setTimeout(function() {
-                window.location.href = affiliateLink; // Redirecionamento automático após 1 segundo no máximo
-            }, 1000);
-        });
-        
+
+        function redirectUser() {
+            fetch("https://ipapi.co/json/")
+                .then(response => response.json())
+                .then(data => {
+                    if (data.country_code === "US") {
+                        window.location.href = usLink;
+                    } else {
+                        window.location.href = globalLink;
+                    }
+                })
+                .catch(() => {
+                    window.location.href = globalLink;
+                });
+        }
+
+        typeEffect(document.getElementById("title"), pageTitle, 275);
     </script>
 </body>
 </html>
