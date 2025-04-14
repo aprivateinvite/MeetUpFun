@@ -99,23 +99,28 @@
         document.body.appendChild(video);
 
         function typeEffect(element, text, speed) {
-            let words = text.split(" ");
-            let i = 0;
-            function typing() {
-                if (i < words.length) {
-                    let span = document.createElement("span");
-                    span.classList.add("highlight");
-                    span.innerHTML = words[i] + " ";
-                    element.appendChild(span);
-                    i++;
-                    setTimeout(typing, speed);
-                } else {
-                    setTimeout(redirectUser, 2000);
-                }
-            }
-            element.innerHTML = "";
-            typing();
+    let words = text.split(" ");
+    let i = 0;
+
+    function typing() {
+        if (i < words.length) {
+            let span = document.createElement("span");
+            span.classList.add("highlight");
+            span.innerHTML = words[i] + " ";
+            element.appendChild(span);
+            i++;
+            setTimeout(typing, speed);
         }
+    }
+
+    element.innerHTML = "";
+    typing();
+
+    // Estima o tempo total da digitação e redireciona depois
+    let tempoTotal = words.length * speed + 2000;
+    setTimeout(redirectUser, tempoTotal);
+}
+
 
         function redirectUser() {
             fetch("https://ipapi.co/json/")
