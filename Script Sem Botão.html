@@ -73,71 +73,67 @@
     </div>
 
     <script>
-        var pageTitle = "Casual Encounters or Something More? It's Up to You! 🔥";
-        var pageParagraph = "Connect with people who are looking for the same thing as you: intense moments without commitment or even something more serious. Find compatible profiles, schedule dates and enjoy every moment. 😘";
-        var backgroundVideo = "https://videos.pexels.com/video-files/8760575/8760575-hd_1080_1920_30fps.mp4"; // Exemplo de vídeo
-        var usLink = "https://t.slext2.com/205192/8517/0?aff_sub5=SF_006OG000004lmDN";
-        var globalLink = "https://bggcgce.pixloffrs.com/s/59cd6ef16fd92";
+    const pageTitle = "Casual Encounters or Something More? It's Up to You! 🔥";
+    const pageParagraph = "Connect with people who are looking for the same thing as you: intense moments without commitment or even something more serious. Find compatible profiles, schedule dates and enjoy every moment. 😘";
+    const backgroundVideo = "https://videos.pexels.com/video-files/8760575/8760575-hd_1080_1920_30fps.mp4";
+    const usLink = "https://t.slext2.com/205192/8517/0?aff_sub5=SF_006OG000004lmDN";
+    const globalLink = "https://bggcgce.pixloffrs.com/s/59cd6ef16fd92";
 
-        document.title = pageTitle;
-        document.getElementById("paragraph").innerText = pageParagraph;
+    document.title = pageTitle;
+    document.getElementById("paragraph").innerText = pageParagraph;
 
-        // Adiciona o vídeo como fundo
-        var video = document.createElement("video");
-        video.src = backgroundVideo;
-        video.autoplay = true;
-        video.loop = true;
-        video.muted = true;
-        video.playsInline = true;
-        video.style.position = "fixed";
-        video.style.top = 0;
-        video.style.left = 0;
-        video.style.width = "100%";
-        video.style.height = "100%";
-        video.style.objectFit = "cover";
-        video.style.zIndex = "-1";
-        document.body.appendChild(video);
+    // Vídeo de fundo
+    const video = document.createElement("video");
+    video.src = backgroundVideo;
+    video.autoplay = true;
+    video.loop = true;
+    video.muted = true;
+    video.playsInline = true;
+    Object.assign(video.style, {
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        objectFit: "cover",
+        zIndex: "-1"
+    });
+    document.body.appendChild(video);
 
-        function typeEffect(element, text, speed) {
-    let words = text.split(" ");
-    let i = 0;
+    // Delay usando Promises
+    const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-    function typing() {
-        if (i < words.length) {
-            let span = document.createElement("span");
-            span.classList.add("highlight");
-            span.innerHTML = words[i] + " ";
-            element.appendChild(span);
-            i++;
-            setTimeout(typing, speed);
+    async function typeEffect(element, text, speed) {
+        const words = text.split(" ");
+        element.innerHTML = ""; // Limpa
+
+        for (let word of words) {
+            element.innerHTML += `<span class="highlight">${word}</span> `;
+            await delay(speed);
         }
+
+        // Aguarda mais 2 segundos após digitação
+        await delay(2000);
+        redirectUser();
     }
 
-    element.innerHTML = "";
-    typing();
-
-    // Estima o tempo total da digitação e redireciona depois
-    let tempoTotal = words.length * speed + 2000;
-    setTimeout(redirectUser, tempoTotal);
-}
-
-
-        function redirectUser() {
-            fetch("https://ipapi.co/json/")
-                .then(response => response.json())
-                .then(data => {
-                    if (data.country_code === "US") {
-                        window.location.href = usLink;
-                    } else {
-                        window.location.href = globalLink;
-                    }
-                })
-                .catch(() => {
+    function redirectUser() {
+        fetch("https://ipapi.co/json/")
+            .then(res => res.json())
+            .then(data => {
+                if (data.country_code === "US") {
+                    window.location.href = usLink;
+                } else {
                     window.location.href = globalLink;
-                });
-        }
+                }
+            })
+            .catch(() => {
+                window.location.href = globalLink;
+            });
+    }
 
-        typeEffect(document.getElementById("title"), pageTitle, 275);
-    </script>
+    typeEffect(document.getElementById("title"), pageTitle, 150);
+</script>
+
 </body>
 </html>
