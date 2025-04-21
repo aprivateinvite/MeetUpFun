@@ -1,78 +1,98 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minha Landing Page</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Minha Landing Page</title>
 
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-G0BVPQ1ETG"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G0BVPQ1ETG"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-G0BVPQ1ETG');
+  </script>
 
-  gtag('config', 'G-G0BVPQ1ETG');
-</script>
-    
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-size: cover;
-            background-position: center;
-            color: white;
-            text-align: center;
-        }
-        .landing-container {
-            background: rgba(0, 0, 0, 0.0); /* Caixa de texto transparente */
-            padding: 30px;
-            border-radius: 15px;
-            max-width: 800px;
-            box-shadow: 0px 0px 20px rgba(255, 0, 0, 0.6);
-        }
-        h1 {
-            font-size: 36px;
-            margin-bottom: 20px;
-            background: linear-gradient(90deg, #ff6a00, #ee0979);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            overflow: hidden;
-            display: block;
-            white-space: normal;
-            word-wrap: break-word;
-            max-width: 100%;
-        }
-        p {
-            font-size: 18px;
-            margin-bottom: 30px;
-        }
-        .typing-container {
-            display: inline-block;
-            border-right: 3px solid white;
-            white-space: pre-line;
-            overflow: hidden;
-            word-wrap: break-word;
-        }
-        .highlight {
-            color: #ffcc00;
-            font-weight: bold;
-        }
-    </style>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-size: cover;
+      background-position: center;
+      color: white;
+      text-align: center;
+    }
+
+    .landing-container {
+      background: rgba(0, 0, 0, 0.0);
+      padding: 30px;
+      border-radius: 15px;
+      max-width: 800px;
+      box-shadow: 0px 0px 20px rgba(255, 0, 0, 0.6);
+    }
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 20px;
+      background: linear-gradient(90deg, #ff6a00, #ee0979);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      overflow: hidden;
+      display: block;
+      white-space: normal;
+      word-wrap: break-word;
+      max-width: 100%;
+    }
+
+    p {
+      font-size: 18px;
+      margin-bottom: 30px;
+    }
+
+    .typing-container {
+      display: inline-block;
+      border-right: 3px solid white;
+      white-space: pre-line;
+      overflow: hidden;
+      word-wrap: break-word;
+    }
+
+    .highlight {
+      color: #ffcc00;
+      font-weight: bold;
+    }
+
+    .action-button {
+      background-color: #e91e63; /* rosa vibrante */
+      border: none;
+      color: white;
+      padding: 15px 30px;
+      text-align: center;
+      font-size: 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .action-button:hover {
+      background-color: #c2185b; /* rosa mais escuro */
+    }
+  </style>
 </head>
 <body id="page-body">
+  <div class="landing-container">
+    <h1><span class="typing-container" id="title"></span></h1>
+    <p id="paragraph"></p>
+    <button id="cta-button" class="action-button" style="display: none;">Acessar Agora</button>
+  </div>
 
-    <div class="landing-container">
-        <h1><span class="typing-container" id="title"></span></h1>
-        <p id="paragraph"></p>
-    </div>
-
-    <script>
+  <script>
     const pageTitle = "Casual Encounters or Something More? It's Up to You! 🔥";
     const pageParagraph = "Connect with people who are looking for the same thing as you: intense moments without commitment or even something more serious. Find compatible profiles, schedule dates and enjoy every moment. 😘";
     const backgroundVideo = "https://videos.pexels.com/video-files/8760575/8760575-hd_1080_1920_30fps.mp4";
@@ -90,50 +110,48 @@
     video.muted = true;
     video.playsInline = true;
     Object.assign(video.style, {
-        position: "fixed",
-        top: 0,
-        left: 0,
-        width: "100%",
-        height: "100%",
-        objectFit: "cover",
-        zIndex: "-1"
+      position: "fixed",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      objectFit: "cover",
+      zIndex: "-1"
     });
     document.body.appendChild(video);
 
-    // Delay usando Promises
+    // Função de digitação
     const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+    const button = document.getElementById("cta-button");
+    let destino = globalLink;
 
     async function typeEffect(element, text, speed) {
-        const words = text.split(" ");
-        element.innerHTML = ""; // Limpa
+      const words = text.split(" ");
+      element.innerHTML = "";
 
-        for (let word of words) {
-            element.innerHTML += `<span class="highlight">${word}</span> `;
-            await delay(speed);
-        }
+      for (let word of words) {
+        element.innerHTML += `<span class="highlight">${word}</span> `;
+        await delay(speed);
+      }
 
-        // Aguarda mais 2 segundos após digitação
-        await delay(2000);
-        redirectUser();
+      await delay(1000);
+      button.style.display = "inline-block";
     }
 
-    function redirectUser() {
-        fetch("https://ipapi.co/json/")
-            .then(res => res.json())
-            .then(data => {
-                if (data.country_code === "US") {
-                    window.location.href = usLink;
-                } else {
-                    window.location.href = globalLink;
-                }
-            })
-            .catch(() => {
-                window.location.href = globalLink;
-            });
-    }
+    fetch("https://ipapi.co/json/")
+      .then(res => res.json())
+      .then(data => {
+        destino = (data.country_code === "US") ? usLink : globalLink;
+      })
+      .catch(() => {
+        destino = globalLink;
+      });
+
+    button.addEventListener("click", () => {
+      window.location.href = destino;
+    });
 
     typeEffect(document.getElementById("title"), pageTitle, 150);
-</script>
-
+  </script>
 </body>
 </html>
