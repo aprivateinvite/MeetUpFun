@@ -69,7 +69,7 @@
     }
 
     .action-button {
-      background-color: #e91e63; /* rosa vibrante */
+      background-color: #e91e63;
       border: none;
       color: white;
       padding: 15px 30px;
@@ -81,7 +81,7 @@
     }
 
     .action-button:hover {
-      background-color: #c2185b; /* rosa mais escuro */
+      background-color: #c2185b;
     }
   </style>
 </head>
@@ -96,8 +96,7 @@
     const pageTitle = "Casual Encounters or Something More? It's Up to You! 🔥";
     const pageParagraph = "Connect with people who are looking for the same thing as you: intense moments without commitment or even something more serious. Find compatible profiles, schedule dates and enjoy every moment. 😘";
     const backgroundVideo = "https://videos.pexels.com/video-files/8760575/8760575-hd_1080_1920_30fps.mp4";
-    const usLink = "https://t.mbdaad.link/205192/8517/0?aff_sub5=SF_006OG000004lmDN";
-    const globalLink = "https://bggcgce.pixloffrs.com/s/59cd6ef16fd92";
+    const destino = "https://t.mbdaad.link/205192/8517/0?aff_sub5=SF_006OG000004lmDN"; // único link para todos
 
     document.title = pageTitle;
     document.getElementById("paragraph").innerText = pageParagraph;
@@ -123,7 +122,6 @@
     // Função de digitação
     const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
     const button = document.getElementById("cta-button");
-    let destino = globalLink;
 
     async function typeEffect(element, text, speed) {
       const words = text.split(" ");
@@ -137,15 +135,6 @@
       await delay(1000);
       button.style.display = "inline-block";
     }
-
-    fetch("https://ipapi.co/json/")
-      .then(res => res.json())
-      .then(data => {
-        destino = (data.country_code === "US") ? usLink : globalLink;
-      })
-      .catch(() => {
-        destino = globalLink;
-      });
 
     button.addEventListener("click", () => {
       window.location.href = destino;
