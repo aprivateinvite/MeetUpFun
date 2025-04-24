@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Minha Landing Page</title>
+  <title>Ready for Wild Nights & Real Connections? 🔥</title>
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-G0BVPQ1ETG"></script>
@@ -33,13 +33,13 @@
       background: rgba(0, 0, 0, 0.0);
       padding: 30px;
       border-radius: 15px;
-      max-width: 800px;
-      box-shadow: 0px 0px 20px rgba(255, 0, 0, 0.6);
+      max-width: 850px;
+      box-shadow: 0px 0px 25px rgba(255, 0, 0, 0.5);
     }
 
     h1 {
-      font-size: 36px;
-      margin-bottom: 20px;
+      font-size: 45px;
+      margin-bottom: 10px;
       background: linear-gradient(90deg, #ff6a00, #ee0979);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -47,12 +47,16 @@
       display: block;
       white-space: normal;
       word-wrap: break-word;
-      max-width: 100%;
+    }
+
+    h2 {
+      font-size: 26px;
+      margin-bottom: 25px;
     }
 
     p {
-      font-size: 18px;
-      margin-bottom: 30px;
+      font-size: 20px;
+      margin-bottom: 25px;
     }
 
     .typing-container {
@@ -68,15 +72,22 @@
       font-weight: bold;
     }
 
+    .you-decide {
+      margin-top: 30px;
+      font-size: 22px;
+      color: #ffcc00;
+    }
+
     .action-button {
       background-color: #e91e63;
       border: none;
       color: white;
-      padding: 15px 30px;
+      padding: 18px 36px;
       text-align: center;
-      font-size: 18px;
-      border-radius: 10px;
+      font-size: 22px;
+      border-radius: 12px;
       cursor: pointer;
+      margin-top: 20px;
       transition: background-color 0.3s ease;
     }
 
@@ -88,20 +99,25 @@
 <body id="page-body">
   <div class="landing-container">
     <h1><span class="typing-container" id="title"></span></h1>
+    <h2 id="subtitle">Whatever you're craving, it starts right here.</h2>
     <p id="paragraph"></p>
-    <button id="cta-button" class="action-button" style="display: none;">Access Now</button>
+
+    <div class="you-decide">
+      🔥 <strong>You decide:</strong> a no-strings night, playful flirting, casual hangouts, or something more serious. Your vibe, your rules.
+    </div>
+
+    <button id="cta-button" class="action-button" style="display: none;">Join Now 🔥</button>
   </div>
 
   <script>
-    const pageTitle = "Casual Encounters or Something More? It's Up to You! 🔥";
-    const pageParagraph = "Connect with people who are looking for the same thing as you: intense moments without commitment or even something more serious. Find compatible profiles, schedule dates and enjoy every moment. 😘";
+    const pageTitle = "Ready for Wild Nights & Real Connections? 🔥";
+    const pageParagraph = "Tired of boring apps and fake profiles? Meet real people nearby looking for exactly what you want — wild hookups, casual flirts, spicy chats, or maybe even a spark you didn't expect. It’s private, free to join, and totally up to you how far you take it.";
     const backgroundVideo = "https://videos.pexels.com/video-files/8760575/8760575-hd_1080_1920_30fps.mp4";
-    const destino = "https://t.mbdaad.link/205192/8517/0?aff_sub5=SF_006OG000004lmDN"; // único link para todos
+    const destino = "https://t.mbdaad.link/205192/8517/0?aff_sub5=SF_006OG000004lmDN";
 
     document.title = pageTitle;
     document.getElementById("paragraph").innerText = pageParagraph;
 
-    // Vídeo de fundo
     const video = document.createElement("video");
     video.src = backgroundVideo;
     video.autoplay = true;
@@ -119,7 +135,6 @@
     });
     document.body.appendChild(video);
 
-    // Função de digitação
     const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
     const button = document.getElementById("cta-button");
 
@@ -132,7 +147,7 @@
         await delay(speed);
       }
 
-      await delay(1000);
+      await delay(700);
       button.style.display = "inline-block";
     }
 
@@ -140,7 +155,7 @@
       window.location.href = destino;
     });
 
-    typeEffect(document.getElementById("title"), pageTitle, 150);
+    typeEffect(document.getElementById("title"), pageTitle, 130);
   </script>
 </body>
 </html>
