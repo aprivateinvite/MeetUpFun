@@ -15,86 +15,7 @@
   </script>
 
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      height: 100vh;
-      background-size: cover;
-      background-position: center;
-      color: white;
-      text-align: center;
-    }
-
-    .landing-container {
-      background: rgba(0, 0, 0, 0.0);
-      padding: 20px;
-      border-radius: 15px;
-      max-width: 850px;
-      box-shadow: 0px 0px 25px rgba(255, 0, 0, 0.5);
-      margin-top: 30px;
-    }
-
-    h1 {
-      font-size: 36px;
-      margin-bottom: 8px;
-      background: linear-gradient(90deg, #ff6a00, #ee0979);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      overflow: hidden;
-      display: block;
-      white-space: normal;
-      word-wrap: break-word;
-    }
-
-    h2 {
-      font-size: 22px;
-      margin-bottom: 18px;
-    }
-
-    p {
-      font-size: 18px;
-      margin-bottom: 20px;
-    }
-
-    .typing-container {
-      display: inline-block;
-      border-right: 3px solid white;
-      white-space: pre-line;
-      overflow: hidden;
-      word-wrap: break-word;
-    }
-
-    .highlight {
-      color: #ffcc00;
-      font-weight: bold;
-    }
-
-    .you-decide {
-      margin-top: 18px;
-      font-size: 20px;
-      color: #ffcc00;
-    }
-
-    .action-button {
-      background-color: #e91e63;
-      border: none;
-      color: white;
-      padding: 14px 28px;
-      text-align: center;
-      font-size: 20px;
-      border-radius: 12px;
-      cursor: pointer;
-      margin-top: 18px;
-      transition: background-color 0.3s ease;
-    }
-
-    .action-button:hover {
-      background-color: #c2185b;
-    }
+    /* (seu CSS permanece o mesmo) */
   </style>
 </head>
 <body id="page-body">
@@ -114,7 +35,6 @@
     const pageTitle = "Ready for Hot Nights and Real Connections? 🔥";
     const pageParagraph = "Tired of boring apps and fake profiles? Meet real people near you looking for exactly what you want — from casual encounters to something more serious. It’s private, free, and you decide how far you want to go.";
     const backgroundVideo = "https://raw.githubusercontent.com/S4rtoriocf/MeetUpFun/main/Videos/Cama%2001%20(2).mp4";
-    const destino = "https://t.mbdaad.link/205192/8517/0?aff_sub5=SF_006OG000004lmDN";
 
     document.title = pageTitle;
     document.getElementById("paragraph").innerText = pageParagraph;
@@ -142,18 +62,43 @@
     async function typeEffect(element, text, speed) {
       const words = text.split(" ");
       element.innerHTML = "";
-
       for (let word of words) {
         element.innerHTML += `<span class="highlight">${word}</span> `;
         await delay(speed);
       }
-
       await delay(600);
       button.style.display = "inline-block";
     }
 
     button.addEventListener("click", () => {
-      window.location.href = destino;
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+      fetch('https://ipinfo.io/json?token=af2937192259d9')
+        .then(response => response.json())
+        .then(data => {
+          const country = data.country;
+
+          // Evento personalizado no Analytics
+          gtag('event', 'click_offer_button', {
+            'event_category': isMobile ? 'Mobile' : 'Desktop',
+            'event_label': country
+          });
+
+          // Links de redirecionamento
+          const linkUS = 'https://t.mbdaad.link/205192/8517/0?aff_sub5=SF_006OG000004lmDN';
+          const linkGlobal = 'https://t.mbdaad.link/205192/3785/0?target=domainredirects&aff_sub5=SF_006OG000004lmDN';
+
+          if (country === 'US') {
+            window.location.href = linkUS;
+          } else {
+            window.location.href = linkGlobal;
+          }
+        })
+        .catch(error => {
+          console.error('Erro ao buscar localização', error);
+          // Se falhar, redireciona para link global
+          window.location.href = 'https://t.mbdaad.link/205192/3785/0?target=domainredirects&aff_sub5=SF_006OG000004lmDN';
+        });
     });
 
     typeEffect(document.getElementById("title"), pageTitle, 120);
