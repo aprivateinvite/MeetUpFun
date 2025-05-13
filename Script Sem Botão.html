@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Meet, Flirt & Play!</title>
 
-  <!-- Google tag (gtag.js) -->
+  <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-G0BVPQ1ETG"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -15,10 +15,103 @@
   </script>
 
   <style>
-    /* (seu CSS permanece o mesmo) */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      height: 100vh;
+      background-size: cover;
+      background-position: center;
+      color: white;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .landing-container {
+      background: rgba(0, 0, 0, 0.0);
+      padding: 20px;
+      border-radius: 15px;
+      max-width: 850px;
+      box-shadow: 0px 0px 25px rgba(255, 0, 0, 0.5);
+      margin-top: 30px;
+      position: relative;
+      z-index: 2;
+    }
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 8px;
+      background: linear-gradient(90deg, #ff6a00, #ee0979);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    h2 {
+      font-size: 22px;
+      margin-bottom: 18px;
+    }
+
+    p {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    .typing-container {
+      display: inline-block;
+      border-right: 3px solid white;
+      white-space: pre-line;
+      overflow: hidden;
+    }
+
+    .highlight {
+      color: #ffcc00;
+      font-weight: bold;
+    }
+
+    .you-decide {
+      margin-top: 18px;
+      font-size: 20px;
+      color: #ffcc00;
+    }
+
+    .action-button {
+      background-color: #e91e63;
+      border: none;
+      color: white;
+      padding: 16px 32px;
+      text-align: center;
+      font-size: 20px;
+      border-radius: 12px;
+      cursor: pointer;
+      margin-top: 24px;
+      transition: background-color 0.3s ease;
+      display: inline-block;
+    }
+
+    .action-button:hover {
+      background-color: #c2185b;
+    }
+
+    video.bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      min-width: 100%;
+      min-height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
   </style>
 </head>
-<body id="page-body">
+
+<body>
+  <video class="bg-video" autoplay loop muted playsinline>
+    <source src="https://raw.githubusercontent.com/S4rtoriocf/MeetUpFun/main/Videos/Cama%2001%20(2).mp4" type="video/mp4">
+  </video>
+
   <div class="landing-container">
     <h1><span class="typing-container" id="title"></span></h1>
     <h2 id="subtitle">Whatever you’re looking for, start here.</h2>
@@ -28,33 +121,15 @@
       🔥 <strong>You decide:</strong> Your vibe, your rules.
     </div>
 
-    <button id="cta-button" class="action-button" style="display: none;">Access Now 🔥</button>
+    <button id="cta-button" class="action-button" style="display:none;">Access Now 🔥</button>
   </div>
 
   <script>
     const pageTitle = "Ready for Hot Nights and Real Connections? 🔥";
     const pageParagraph = "Tired of boring apps and fake profiles? Meet real people near you looking for exactly what you want — from casual encounters to something more serious. It’s private, free, and you decide how far you want to go.";
-    const backgroundVideo = "https://raw.githubusercontent.com/S4rtoriocf/MeetUpFun/main/Videos/Cama%2001%20(2).mp4";
 
     document.title = pageTitle;
     document.getElementById("paragraph").innerText = pageParagraph;
-
-    const video = document.createElement("video");
-    video.src = backgroundVideo;
-    video.autoplay = true;
-    video.loop = true;
-    video.muted = true;
-    video.playsInline = true;
-    Object.assign(video.style, {
-      position: "fixed",
-      top: 0,
-      left: 0,
-      width: "100%",
-      height: "100%",
-      objectFit: "cover",
-      zIndex: "-1"
-    });
-    document.body.appendChild(video);
 
     const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
     const button = document.getElementById("cta-button");
@@ -62,31 +137,32 @@
     async function typeEffect(element, text, speed) {
       const words = text.split(" ");
       element.innerHTML = "";
+
       for (let word of words) {
         element.innerHTML += `<span class="highlight">${word}</span> `;
         await delay(speed);
       }
+
       await delay(600);
       button.style.display = "inline-block";
     }
 
-    button.addEventListener("click", () => {
+    // Redirecionamento com IPinfo
+    function redirectUser() {
       const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
       fetch('https://ipinfo.io/json?token=af2937192259d9')
         .then(response => response.json())
         .then(data => {
           const country = data.country;
+          const linkUS = 'https://t.mbdaad.link/205192/8517/0?aff_sub5=SF_006OG000004lmDN';
+          const linkGlobal = 'https://t.mbdaad.link/205192/3785/0?target=domainredirects&aff_sub5=SF_006OG000004lmDN';
 
-          // Evento personalizado no Analytics
+          // Registro de evento no Analytics
           gtag('event', 'click_offer_button', {
             'event_category': isMobile ? 'Mobile' : 'Desktop',
             'event_label': country
           });
-
-          // Links de redirecionamento
-          const linkUS = 'https://t.mbdaad.link/205192/8517/0?aff_sub5=SF_006OG000004lmDN';
-          const linkGlobal = 'https://t.mbdaad.link/205192/3785/0?target=domainredirects&aff_sub5=SF_006OG000004lmDN';
 
           if (country === 'US') {
             window.location.href = linkUS;
@@ -96,10 +172,12 @@
         })
         .catch(error => {
           console.error('Erro ao buscar localização', error);
-          // Se falhar, redireciona para link global
+          // Fallback — redireciona pro link global
           window.location.href = 'https://t.mbdaad.link/205192/3785/0?target=domainredirects&aff_sub5=SF_006OG000004lmDN';
         });
-    });
+    }
+
+    button.addEventListener("click", redirectUser);
 
     typeEffect(document.getElementById("title"), pageTitle, 120);
   </script>
