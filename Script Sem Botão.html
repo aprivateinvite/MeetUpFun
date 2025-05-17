@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Meet, Flirt & Play!</title>
 
-  <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-G0BVPQ1ETG"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -23,8 +22,7 @@
       justify-content: center;
       align-items: flex-start;
       height: 100vh;
-      background-size: cover;
-      background-position: center;
+      background-color: black; /* Adicione uma cor de fundo para evitar espaços vazios enquanto o vídeo carrega ou se não cobrir totalmente */
       color: white;
       text-align: center;
       overflow: hidden;
@@ -97,11 +95,14 @@
 
     video.bg-video {
       position: fixed;
-      top: 0;
-      left: 0;
+      top: 50%; /* Centraliza verticalmente */
+      left: 50%; /* Centraliza horizontalmente */
       min-width: 100%;
       min-height: 100%;
-      object-fit: cover;
+      width: auto; /* Permite que a largura se ajuste */
+      height: auto; /* Permite que a altura se ajuste */
+      transform: translate(-50%, -50%); /* Ajusta o ponto central para o centro do vídeo */
+      object-fit: cover; /* Mantém a proporção e cobre o contêiner, cortando se necessário */
       z-index: 0;
     }
   </style>
@@ -173,7 +174,7 @@
         .catch(error => {
           console.error('Erro ao buscar localização', error);
           // Fallback — redireciona pro link global
-          window.location.href = 'https://t.mbdaad.link/205192/3785/0?target=domainredirects&aff_sub5=SF_006OG000004lmDN';
+          window.location.href = 'https://bggcgce.pixloffrs.com/s/59cd6ef16fd92';
         });
     }
 
