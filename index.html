@@ -156,8 +156,8 @@
         .then(response => response.json())
         .then(data => {
           const country = data.country;
-          const linkUS = 'https://bggcgce.pixloffrs.com/s/59cd6ef16fd92';
-          const linkGlobal = 'https://bggcgce.pixloffrs.com/s/59cd6ef16fd92';
+          const linkUS = 'https://bggcgce.datesoffers.com/s/59cd6ef16fd92';
+          const linkGlobal = 'https://bggcgce.datesoffers.com/s/59cd6ef16fd92';
 
           // Registro de evento no Analytics
           gtag('event', 'click_offer_button', {
@@ -174,7 +174,7 @@
         .catch(error => {
           console.error('Erro ao buscar localização', error);
           // Fallback — redireciona pro link global
-          window.location.href = 'https://bggcgce.pixloffrs.com/s/59cd6ef16fd92';
+          window.location.href = 'https://bggcgce.datesoffers.com/s/59cd6ef16fd92';
         });
     }
 
