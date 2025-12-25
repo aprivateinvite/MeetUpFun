@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Private Connections | Meet & Play</title>
 
-  <!-- Google Tag Manager -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-G0BVPQ1ETG"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -189,8 +188,13 @@
 
 <body>
   <video class="bg-video" autoplay loop muted playsinline>
-    <source src="https://cdn.statically.io/gh/S4rtoriocf/MeetUpFun/main/Videos/video-novo.mp4" type="video/mp4">
+    <source src="https://cdn.statically.io/gh/S4rtoriocf/MeetUpFun/main/Videos/video-novo.mp4?v=final" type="video/mp4">
+    
+    <source src="https://cdn.jsdelivr.net/gh/S4rtoriocf/MeetUpFun@main/Videos/video-novo.mp4?v=final" type="video/mp4">
+    
+    <source src="https://raw.githack.com/S4rtoriocf/MeetUpFun/main/Videos/video-novo.mp4" type="video/mp4">
   </video>
+  
   <div class="overlay"></div>
 
   <div class="landing-card">
@@ -216,6 +220,16 @@
     const button = document.getElementById("cta-button");
     const btnText = document.getElementById("btn-text");
     const loader = document.getElementById("btn-loader");
+
+    // Tenta forçar o play caso o navegador bloqueie
+    window.addEventListener('load', function() {
+        const video = document.querySelector('video');
+        if(video) {
+            video.play().catch(function(error) {
+                console.log("Autoplay bloqueado pelo navegador, aguardando interação.", error);
+            });
+        }
+    });
 
     // Redirecionamento otimizado
     async function handleRedirection() {
