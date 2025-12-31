@@ -36,17 +36,6 @@
       align-items: center;
     }
 
-    /* Fallback background caso o vídeo não carregue */
-    .bg-fallback {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-      z-index: -3;
-    }
-
     /* Video Background with Filter */
     .bg-video {
       position: fixed;
@@ -60,12 +49,6 @@
       object-fit: cover;
       z-index: -2;
       filter: brightness(0.5) blur(2px);
-      opacity: 0;
-      transition: opacity 0.5s ease-in;
-    }
-
-    .bg-video.loaded {
-      opacity: 1;
     }
 
     .overlay {
@@ -204,15 +187,9 @@
 </head>
 
 <body>
-  <!-- Fallback background -->
-  <div class="bg-fallback"></div>
-
-  <!-- Video background com múltiplas fontes -->
-  <video class="bg-video" id="bgVideo" autoplay loop muted playsinline preload="auto">
-    <!-- GitHub raw URLs - Ordem de prioridade -->
-    <source src="https://raw.githubusercontent.com/aprivateinvite/MeetUpFun/main/Videos/video-novo.mp4" type="video/mp4">
-    <source src="https://cdn.jsdelivr.net/gh/aprivateinvite/MeetUpFun@main/Videos/video-novo.mp4" type="video/mp4">
-    <source src="https://cdn.statically.io/gh/aprivateinvite/MeetUpFun/main/Videos/video-novo.mp4" type="video/mp4">
+  <!-- CORREÇÃO: Usando a URL que funcionava no script antigo -->
+  <video class="bg-video" autoplay loop muted playsinline>
+    <source src="https://raw.githubusercontent.com/S4rtoriocf/MeetUpFun/main/Videos/video-novo.mp4" type="video/mp4">
   </video>
   
   <div class="overlay"></div>
@@ -240,42 +217,16 @@
     const button = document.getElementById("cta-button");
     const btnText = document.getElementById("btn-text");
     const loader = document.getElementById("btn-loader");
-    const video = document.getElementById("bgVideo");
 
-    // Gerenciamento do vídeo
-    function initVideo() {
-      // Adiciona classe quando o vídeo carregar
-      video.addEventListener('loadeddata', function() {
-        video.classList.add('loaded');
-        console.log('✅ Vídeo carregado com sucesso');
-      });
-
-      // Tenta forçar o play
-      video.addEventListener('canplay', function() {
-        video.play().catch(function(error) {
-          console.log('⚠️ Autoplay bloqueado, aguardando interação do usuário', error);
-        });
-      });
-
-      // Fallback caso haja erro no carregamento
-      video.addEventListener('error', function(e) {
-        console.error('❌ Erro ao carregar vídeo:', e);
-        console.log('ℹ️ Usando background fallback');
-      });
-
-      // Tenta carregar o vídeo
-      video.load();
-    }
-
-    // Inicializa o vídeo quando a página carregar
-    window.addEventListener('load', initVideo);
-
-    // Tenta dar play em qualquer interação do usuário
-    document.addEventListener('click', function() {
-      if (video.paused) {
-        video.play().catch(err => console.log('Não foi possível dar play:', err));
-      }
-    }, { once: true });
+    // Tenta forçar o play caso o navegador bloqueie
+    window.addEventListener('load', function() {
+        const video = document.querySelector('video');
+        if(video) {
+            video.play().catch(function(error) {
+                console.log("Autoplay bloqueado pelo navegador, aguardando interação.", error);
+            });
+        }
+    });
 
     // Redirecionamento otimizado
     async function handleRedirection() {
