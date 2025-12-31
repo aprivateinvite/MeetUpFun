@@ -36,28 +36,34 @@
       overflow:hidden;
     }
 
-    /* Video Background */
+    /* 🔧 CORREÇÃO: vídeo SEM z-index negativo e SEM filter */
     .bg-video{
       position:fixed;
-      top:50%;
-      left:50%;
-      min-width:100%;
-      min-height:100%;
-      transform:translate(-50%,-50%);
+      inset:0;
+      width:100%;
+      height:100%;
       object-fit:cover;
-      filter:brightness(0.45) blur(1.5px);
-      z-index:-2;
+      z-index:0;
     }
 
+    /* 🔧 CORREÇÃO: overlay acima do vídeo */
     .overlay{
       position:fixed;
       inset:0;
-      background:linear-gradient(to bottom, rgba(0,0,0,.4), rgba(0,0,0,.85));
-      z-index:-1;
+      background:
+        linear-gradient(
+          to bottom,
+          rgba(0,0,0,.45),
+          rgba(0,0,0,.85)
+        );
+      backdrop-filter: blur(1.5px);
+      z-index:1;
     }
 
     /* Card */
     .card{
+      position:relative;
+      z-index:2;
       max-width:460px;
       margin:auto;
       padding:42px 32px;
@@ -187,12 +193,17 @@
       font-size:11px;
       color:#888;
     }
+
+    /* 📱 Mobile sem vídeo */
+    @media (max-width:768px){
+      .bg-video{display:none;}
+    }
   </style>
 </head>
 
 <body>
 
-  <video class="bg-video" autoplay loop muted playsinline>
+  <video class="bg-video" autoplay loop muted playsinline preload="metadata">
     <source src="https://raw.githubusercontent.com/aprivateinvite/MeetUpFun/main/Videos/video-novo.mp4" type="video/mp4">
   </video>
 
@@ -231,7 +242,7 @@
     const loader = document.getElementById("loader");
 
     window.addEventListener('load', () => {
-      const video = document.querySelector('video');
+      const video = document.querySelector('.bg-video');
       if(video){
         video.play().catch(()=>{});
       }
