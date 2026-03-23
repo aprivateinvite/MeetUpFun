@@ -133,32 +133,32 @@ font-weight:700;
 }
 
 .redirect-msg{
-width:100%;
-padding:18px;
-border-radius:16px;
+margin-top:20px;
 font-size:18px;
 font-weight:700;
-color:#fff;
-background:linear-gradient(45deg,var(--primary),var(--accent));
-text-transform:uppercase;
-letter-spacing:.8px;
-display:flex;
-justify-content:center;
-align-items:center;
-gap:10px;
 }
 
-.loader{
-width:18px;
-height:18px;
-border:3px solid #fff;
-border-bottom-color:transparent;
-border-radius:50%;
-animation:spin 1s linear infinite;
+.countdown{
+margin-top:10px;
+font-size:28px;
+font-weight:800;
+color:var(--primary);
 }
 
-@keyframes spin{
-to{transform:rotate(360deg)}
+.progress-bar{
+width:100%;
+height:8px;
+background:#222;
+border-radius:10px;
+overflow:hidden;
+margin-top:20px;
+}
+
+.progress{
+height:100%;
+width:0%;
+background:linear-gradient(90deg,var(--primary),var(--accent));
+transition:width .3s;
 }
 
 .footer{
@@ -199,9 +199,12 @@ color:#888;
 <div><span>✔</span><span id="f3"></span></div>
 </div>
 
-<div class="redirect-msg">
-<span id="redirectText"></span>
-<div class="loader"></div>
+<div class="redirect-msg" id="redirectText"></div>
+
+<div class="countdown" id="countdown">3</div>
+
+<div class="progress-bar">
+<div class="progress" id="progress"></div>
 </div>
 
 <div class="footer" id="footerText"></div>
@@ -210,12 +213,14 @@ color:#888;
 
 <script>
 
+const affiliateLink="https://bggcgce.datesoffers.com/s/59cd6ef16fd92";
+
 const translations = {
 
 en:{
 badge:"Active users near you",
 title:"Real People.<br>Private Encounters.",
-description:"Meet verified singles nearby who are tired of games and fake profiles. Discreet, fast and exactly how adult connections should be.",
+description:"Meet verified singles nearby who are tired of games and fake profiles.",
 f1:"No fake bots or empty chats",
 f2:"Private & discreet environment",
 f3:"Verified profiles only",
@@ -226,30 +231,30 @@ footer:"🔒 Secure access · 18+ only · Privacy protected"
 pt:{
 badge:"Usuários ativos perto de você",
 title:"Pessoas reais.<br>Encontros privados.",
-description:"Conheça pessoas verificadas perto de você que estão cansadas de perfis falsos. Discreto, rápido e como conexões adultas devem ser.",
+description:"Conheça pessoas verificadas perto de você.",
 f1:"Sem bots ou chats vazios",
 f2:"Ambiente privado e discreto",
 f3:"Perfis verificados",
 redirect:"Procurando pessoas próximas...",
-footer:"🔒 Acesso seguro · Apenas maiores de 18 · Privacidade protegida"
+footer:"🔒 Acesso seguro · Apenas maiores de 18"
 },
 
 es:{
 badge:"Usuarios activos cerca de ti",
 title:"Personas reales.<br>Encuentros privados.",
-description:"Conoce personas verificadas cerca de ti cansadas de perfiles falsos. Discreto, rápido y como deberían ser las conexiones adultas.",
+description:"Conoce personas verificadas cerca de ti.",
 f1:"Sin bots ni chats vacíos",
 f2:"Ambiente privado y discreto",
 f3:"Perfiles verificados",
 redirect:"Buscando personas cerca de ti...",
-footer:"🔒 Acceso seguro · Solo mayores de 18 · Privacidad protegida"
+footer:"🔒 Acceso seguro · Solo mayores de 18"
 }
 
 };
 
 function detectLanguage(){
 
-const lang = navigator.language || navigator.userLanguage;
+const lang=navigator.language || navigator.userLanguage;
 
 if(lang.startsWith("pt")) return "pt";
 if(lang.startsWith("es")) return "es";
@@ -260,25 +265,71 @@ return "en";
 
 function applyLanguage(){
 
-const lang = detectLanguage();
-const t = translations[lang];
+const lang=detectLanguage();
+const t=translations[lang];
 
-document.getElementById("badgeText").innerHTML = t.badge;
-document.getElementById("title").innerHTML = t.title;
-document.getElementById("description").innerHTML = t.description;
+document.getElementById("badgeText").innerHTML=t.badge;
+document.getElementById("title").innerHTML=t.title;
+document.getElementById("description").innerHTML=t.description;
 
-document.getElementById("f1").innerHTML = t.f1;
-document.getElementById("f2").innerHTML = t.f2;
-document.getElementById("f3").innerHTML = t.f3;
+document.getElementById("f1").innerHTML=t.f1;
+document.getElementById("f2").innerHTML=t.f2;
+document.getElementById("f3").innerHTML=t.f3;
 
-document.getElementById("redirectText").innerHTML = t.redirect;
-document.getElementById("footerText").innerHTML = t.footer;
+document.getElementById("redirectText").innerHTML=t.redirect;
+document.getElementById("footerText").innerHTML=t.footer;
+
+gtag('event','language_detected',{event_label:lang});
+
+}
+
+function startAnalytics(){
+
+const isMobile=/iPhone|Android/i.test(navigator.userAgent);
+
+gtag('event','landing_view');
+gtag('event','device_type',{event_label:isMobile?'Mobile':'Desktop'});
+
+}
+
+function startRedirect(){
+
+let seconds=3;
+const countdown=document.getElementById("countdown");
+const progress=document.getElementById("progress");
+
+let progressValue=0;
+
+const interval=setInterval(()=>{
+
+seconds--;
+countdown.textContent=seconds;
+
+progressValue+=33;
+progress.style.width=progressValue+"%";
+
+gtag('event','progress',{event_label:progressValue+'%'});
+
+if(seconds<=0){
+
+clearInterval(interval);
+
+gtag('event','redirect_offer');
+
+setTimeout(()=>{
+window.location.href=affiliateLink;
+},400);
+
+}
+
+},1000);
 
 }
 
 window.addEventListener("load",()=>{
 
 applyLanguage();
+startAnalytics();
 
 const video=document.querySelector(".bg-video");
 if(video){video.play().catch(()=>{});}
@@ -286,35 +337,6 @@ if(video){video.play().catch(()=>{});}
 startRedirect();
 
 });
-
-async function startRedirect(){
-
-const affiliateLink="https://bggcgce.datesoffers.com/s/59cd6ef16fd92";
-const isMobile=/iPhone|Android/i.test(navigator.userAgent);
-
-try{
-
-const res=await fetch("https://ipinfo.io/json?token=af2937192259d9");
-const data=await res.json();
-
-gtag('event','auto_redirect',{
-event_category:isMobile?'Mobile':'Desktop',
-event_label:data.country || 'Unknown'
-});
-
-setTimeout(()=>{
-window.location.href=affiliateLink;
-},3500);
-
-}catch{
-
-setTimeout(()=>{
-window.location.href=affiliateLink;
-},3500);
-
-}
-
-}
 
 </script>
 
